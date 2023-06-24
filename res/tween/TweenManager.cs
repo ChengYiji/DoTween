@@ -35,10 +35,11 @@ public class TweenManager
 
     public List<TweenBase> tweens = new List<TweenBase>();
 
-    public void AddTween(TweenParam tweenParam)
+    public TweenBase AddTween(TweenParam tweenParam)
     {
         TweenBase tween = TweenFactory.CreateTween(tweenParam);
         tweens.Add(tween);
+        return tween;
     }
 
     public void UpdateAllTween()
@@ -54,5 +55,17 @@ public class TweenManager
             }
             tweens[i].Run(deltaTime);
         }
+    }
+
+    public void removeTween(TweenBase tween)
+    {
+        if (tween == null)
+        {
+            return;
+        }
+        int index = tweens.IndexOf(tween);
+        tweens[index].Dispose();
+        tweens.RemoveAt(index);
+        Debug.Log(tweens.Count);
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class main : MonoBehaviour
 {
     public GameObject gObject;
+    public TweenBase tween;
+    public float delay = 3;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,6 +17,19 @@ public class main : MonoBehaviour
         tp.time = 5;
         tp.tweenObj = gObject.transform;
         tp.easeType = EASE_TYPE.EaseOutSine;
-        TweenManager.Instance.AddTween(tp);
+        tween = TweenManager.Instance.AddTween(tp);
+    }
+
+    private void Update()
+    {
+        if (delay <= 0)
+        {
+            return;
+        }
+        delay -= Time.deltaTime;
+        if (delay <= 0)
+        {
+            TweenManager.Instance.removeTween(tween);
+        }
     }
 }
